@@ -37,8 +37,12 @@ describe("[Challenge] Truster", function () {
       "ExploitLender",
       attacker
     );
-    const exploitLender = await ExploitLenderFactory.deploy();
-    exploitLender.exploit(this.pool.address, this.token.address);
+    const exploitLender = await ExploitLenderFactory.deploy(
+      this.pool.address,
+      this.token.address
+    );
+
+    await exploitLender.exploit();
   });
 
   after(async function () {

